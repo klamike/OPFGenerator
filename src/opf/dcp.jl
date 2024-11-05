@@ -32,6 +32,11 @@ function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
     # nodal voltage
     @variable(model, va[1:N])
 
+
+    # nodal slack
+    @variable(model, ϕ[1:N] ≥ 0)
+    LOADSHED_COST = max(c1) * 100
+
     # Active and reactive dispatch
     @variable(model, pg[1:G])
 
@@ -60,6 +65,7 @@ function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
         sum(gen_status[g] * pg[g] for g in bus_gens[i])
         - sum(branch_status[a] * pf[a] for a in bus_arcs_fr[i])
         - sum(branch_status[a] * pt[a] for a in bus_arcs_to[i])  # pt == -pf
+        + ϕ[i] # additional generator at each node to account for load shedding
         == 
         sum(pd[l] for l in data.bus_loads[i]) + gs[i]
     )
@@ -83,7 +89,7 @@ function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
 
     @objective(model,
         Min,
-        sum(c1[g] * pg[g] + c0[g] for g in 1:G if gen_status[g])
+        sum(c1[g] * pg[g] + c0[g] for g in 1:G if gen_status[g]) + LOADSHED_COST * sum(ϕ[i] for i in 1:N)
     )
 
     return OPFModel{DCOPF}(data, model)
