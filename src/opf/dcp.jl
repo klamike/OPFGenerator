@@ -35,7 +35,7 @@ function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
 
     # nodal slack
     @variable(model, ϕ[1:N] ≥ 0)
-    LOADSHED_COST = max(c1) * 100
+    LOADSHED_COST = maximum(c1) * 100
 
     # Active and reactive dispatch
     @variable(model, pg[1:G])
