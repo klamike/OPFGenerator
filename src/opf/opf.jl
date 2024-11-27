@@ -20,7 +20,7 @@ mutable struct OPFData
     vnom::Vector{Float64}
     vmin::Vector{Float64}
     vmax::Vector{Float64}
-    gs::Vector{Float64}  # shunt
+    gs::Any  # shunt
     bs::Vector{Float64}  # shunt
     bus_arcs_fr::Vector{Vector{Int}}  # indices of branches exiting the bus
     bus_arcs_to::Vector{Vector{Int}}  # indices of branches entering the bus
@@ -50,7 +50,7 @@ mutable struct OPFData
     bus_fr::Vector{Int}  # from bus
     bus_to::Vector{Int}  # to bus
     g::Vector{Float64}
-    b::Vector{Float64}
+    b::Any
     gff::Vector{Float64}
     gft::Vector{Float64}
     gtf::Vector{Float64}

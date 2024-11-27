@@ -6,7 +6,7 @@ struct DCOPF <: AbstractFormulation end
 Build a DCOPF model.
 """
 function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
-    T=Float64,    
+    T=Float64, model = JuMP.GenericModel{T}(optimizer)
 )
     # Grab some data
     N, E, G = data.N, data.E, data.G
@@ -22,7 +22,7 @@ function build_opf(::Type{DCOPF}, data::OPFData, optimizer;
     dvamin, dvamax, smax = data.dvamin, data.dvamax, data.smax
     branch_status = data.branch_status
 
-    model = JuMP.GenericModel{T}(optimizer)
+    # model = JuMP.GenericModel{T}(optimizer)
     model.ext[:opf_model] = DCOPF
 
     #

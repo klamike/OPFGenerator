@@ -4,9 +4,11 @@ authors = ["mtanneau3 <mtanneau3@gatech.edu>"]
 version = "0.1.0"
 
 [deps]
+ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
 Clarabel = "61c947e1-3e6d-4ee4-985a-eec8c727bd6e"
 CodecBzip2 = "523fee87-0ab8-5b00-afb7-3ecf72e48cfd"
 CodecZlib = "944b1d66-785c-5afd-91f1-9de20f533193"
+DiffOpt = "930fe3bc-9c6b-11ea-2d94-6184641e85e7"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
 HDF5 = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
