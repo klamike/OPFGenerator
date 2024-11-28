@@ -39,6 +39,7 @@ function ChainRulesCore.rrule(::typeof(build_and_solve), data, gs, b)
         # Run reverse differentiation
         DiffOpt.reverse_differentiate!(JuMP.backend(opf.model))
     
+
         # Compute derivatives for constraint rhs sensitivities
         δkcl_p = JuMP.constant.(MOI.get.(opf.model, DiffOpt.ReverseConstraintFunction(), opf.model[:kcl_p]))
         brs = MOI.get.(opf.model, DiffOpt.ReverseConstraintFunction(), opf.model[:ohm_pf])
@@ -52,7 +53,7 @@ function ChainRulesCore.rrule(::typeof(build_and_solve), data, gs, b)
                 end
             end
         end
-    
+
         # Return derivatives with respect to `gs` and `b`
         dgs = δkcl_p  # adjust as per indexing in your model
         db = δohm_pf  # adjust as per indexing in your model
@@ -60,6 +61,7 @@ function ChainRulesCore.rrule(::typeof(build_and_solve), data, gs, b)
     end
      return (pg, pf, va), pullback
 end
+
 
 include("exp/nlp_utilities.jl")
 
@@ -141,6 +143,7 @@ end
 
 # Δpg, Δpf, Δva = fill(1.0, len_pg), fill(1.0, len_pf), fill(1.0, len_va)
 # # Δpg[1] = 1
+
 
 # _, dgs, db = pb((Δpg, Δpf, Δva))
 
